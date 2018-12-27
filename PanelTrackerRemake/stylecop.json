@@ -1,0 +1,23 @@
+﻿{
+
+    "$schema": "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers/Settings/stylecop.schema.json",
+    "settings": {
+        "documentationRules": {
+            "companyName": "James Burnside",
+            "xmlHeader": false,
+            "headerDecoration": "--------------------------------------------------",
+            "copyrightText": "Copyright (c) {companyName}. All rights reserved.\nLicensed under the {licenseName} license.",
+            "variables": {
+                "licenseName": "MIT",
+                "licenseFile": "LICENSE"
+            },
+            "documentInternalElements": false
+        },
+        "maintainabilityRules": {
+            "topLevelTypes": [ "class", "interface", "struct" ]
+        },
+        "layoutRules": {
+            "newlineAtEndOfFile": "omit"
+        }
+    }
+}
