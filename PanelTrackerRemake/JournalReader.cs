@@ -24,6 +24,8 @@ namespace PanelTrackerRemake
         private static dynamic vaProxy;
 
         private readonly Regex reg;
+        private Timer timer;
+        private bool hasStarted = false;
 
         /// <summary>
         /// Fires when ever a new entry is made in the journal.
@@ -31,17 +33,9 @@ namespace PanelTrackerRemake
         public event JournalUpdated OnJournalUpdate;
 
         /// <summary>
-        /// Sets the vaProxy to use.
-        /// </summary>
-        public static dynamic VaProxy { set => vaProxy = value; }
-
-        /// <summary>
         /// Gets a value indicating whether or not the Reader has started.
         /// </summary>
         public bool HasStarted => this.hasStarted;
-
-        private Timer timer;
-        private bool hasStarted = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="JournalReader"/> class.
@@ -56,19 +50,45 @@ namespace PanelTrackerRemake
         /// Initializes a new instance of the <see cref="JournalReader"/> class.
         /// Uses default regex.
         /// </summary>
-        /// <param name="ignoredEvents"></param>
-        public JournalReader(string[] ignoredEvents)
-            : this(ignoredEvents,Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\Saved Games\Frontier Developments\Elite Dangerous")
+        /// <param name="ignoredEvents">Name of events to be ignored.</param>
+        public JournalReader(params string[] ignoredEvents)
+            : this(ignoredEvents, Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\Saved Games\Frontier Developments\Elite Dangerous")
         {
         }
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="JournalReader"/> class.
         /// </summary>
-        /// <param name="ignoredEvents"></param>
-        /// <param name="dir"></param>
+        /// <param name="ignoredEvents"><see cref="string"/>'s of event name to be ignored.</param>
+        /// <param name="dir">Directory of journal files.</param>
         public JournalReader(string[] ignoredEvents, string dir)
         {
+        }
+
+        /// <summary>
+        /// Sets the vaProxy to use.
+        /// </summary>
+        public static dynamic VaProxy { set => vaProxy = value; }
+
+        /// <summary>
+        /// Starts the Reader.
+        /// </summary>
+        public void Start()
+        {
+            if (this.hasStarted)
+            {
+                return;
+            }
+
+            this.hasStarted = true;
+            this.timer.Change(0, 100);
+        }
+
+#pragma warning disable SA1300 // Element must begin with upper-case letter
+        private void loop(object state)
+#pragma warning restore SA1300 // Element must begin with upper-case letter
+        {
+
         }
     }
 }
