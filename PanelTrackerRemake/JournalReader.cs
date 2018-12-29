@@ -25,17 +25,6 @@ namespace PanelTrackerRemake
 
         private readonly Regex reg;
         private Timer timer;
-        private bool hasStarted = false;
-
-        /// <summary>
-        /// Fires when ever a new entry is made in the journal.
-        /// </summary>
-        public event JournalUpdated OnJournalUpdate;
-
-        /// <summary>
-        /// Gets a value indicating whether or not the Reader has started.
-        /// </summary>
-        public bool HasStarted => this.hasStarted;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="JournalReader"/> class.
@@ -66,29 +55,52 @@ namespace PanelTrackerRemake
         }
 
         /// <summary>
+        /// Fires when ever a new entry is made in the journal.
+        /// </summary>
+        public event JournalUpdated OnJournalUpdate;
+
+        /// <summary>
         /// Sets the vaProxy to use.
         /// </summary>
         public static dynamic VaProxy { set => vaProxy = value; }
+
+        /// <summary>
+        /// Gets a value indicating whether or not the Reader has started.
+        /// </summary>
+        public bool IsStarted { get; private set; }
 
         /// <summary>
         /// Starts the Reader.
         /// </summary>
         public void Start()
         {
-            if (this.hasStarted)
+            if (this.IsStarted)
             {
                 return;
             }
 
-            this.hasStarted = true;
+            if (this.timer is null)
+            {
+                this.timer = new Timer(this.loop, null, Timeout.Infinite, Timeout.Infinite);
+            }
+
+            this.IsStarted = true;
             this.timer.Change(0, 100);
+        }
+
+        /// <summary>
+        /// Stops the journal reader.
+        /// </summary>
+        public void Stop()
+        {
+            this.timer.Change(Timeout.Infinite, Timeout.Infinite);
         }
 
 #pragma warning disable SA1300 // Element must begin with upper-case letter
         private void loop(object state)
 #pragma warning restore SA1300 // Element must begin with upper-case letter
         {
-
+            // TODO: STUFF.
         }
     }
 }

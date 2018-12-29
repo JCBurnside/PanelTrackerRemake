@@ -1,0 +1,185 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PanelTrackerRemake</name>
+    </assembly>
+    <members>
+        <member name="P:PanelTrackerRemake.EDPTConts.Journal">
+            <summary>
+            Gets the journal SessionState key <see cref="T:System.String"/>.
+            </summary>
+        </member>
+        <member name="P:PanelTrackerRemake.EDPTConts.CurrentPanel">
+            <summary>
+            Gets the current panel sessionState key <see cref="T:System.String"/>.
+            </summary>
+        </member>
+        <member name="P:PanelTrackerRemake.EDPTConts.CurrentCommTab">
+            <summary>
+            Gets the current comm tab sessionState key <see cref="T:System.String"/>.
+            </summary>
+        </member>
+        <member name="P:PanelTrackerRemake.EDPTConts.CurrentTargetTab">
+            <summary>
+            Gets the current target tab sessionState key <see cref="T:System.String"/>.
+            </summary>
+        </member>
+        <member name="P:PanelTrackerRemake.EDPTConts.CurrentSystemTab">
+            <summary>
+            Gets the current system tab sessionState key <see cref="T:System.String"/>.
+            </summary>
+        </member>
+        <member name="P:PanelTrackerRemake.EDPTConts.CurrentSrvRoleTab">
+            <summary>
+            Gets the current srv roles tab sessionState key <see cref="T:System.String"/>.
+            </summary>
+        </member>
+        <member name="P:PanelTrackerRemake.EDPTConts.CurrentShipRoleTab">
+            <summary>
+            Gets the current ship roles tab sessionState key <see cref="T:System.String"/>.
+            </summary>
+        </member>
+        <member name="T:PanelTrackerRemake.JournalUpdated">
+            <summary>
+            Event type for when the journal updates.
+            </summary>
+            <param name="line">Line that has parsed into a <see cref="T:Newtonsoft.Json.Linq.JObject"/>.</param>
+        </member>
+        <member name="T:PanelTrackerRemake.JournalReader">
+            <summary>
+            Used to read the journal in a background thread.
+            </summary>
+        </member>
+        <member name="M:PanelTrackerRemake.JournalReader.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:PanelTrackerRemake.JournalReader"/> class.
+            Uses defualt everything.
+            </summary>
+        </member>
+        <member name="M:PanelTrackerRemake.JournalReader.#ctor(System.String[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:PanelTrackerRemake.JournalReader"/> class.
+            Uses default regex.
+            </summary>
+            <param name="ignoredEvents">Name of events to be ignored.</param>
+        </member>
+        <member name="M:PanelTrackerRemake.JournalReader.#ctor(System.String[],System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PanelTrackerRemake.JournalReader"/> class.
+            </summary>
+            <param name="ignoredEvents"><see cref="T:System.String"/>'s of event name to be ignored.</param>
+            <param name="dir">Directory of journal files.</param>
+        </member>
+        <member name="E:PanelTrackerRemake.JournalReader.OnJournalUpdate">
+            <summary>
+            Fires when ever a new entry is made in the journal.
+            </summary>
+        </member>
+        <member name="P:PanelTrackerRemake.JournalReader.VaProxy">
+            <summary>
+            Sets the vaProxy to use.
+            </summary>
+        </member>
+        <member name="P:PanelTrackerRemake.JournalReader.IsStarted">
+            <summary>
+            Gets a value indicating whether or not the Reader has started.
+            </summary>
+        </member>
+        <member name="M:PanelTrackerRemake.JournalReader.Start">
+            <summary>
+            Starts the Reader.
+            </summary>
+        </member>
+        <member name="M:PanelTrackerRemake.JournalReader.Stop">
+            <summary>
+            Stops the journal reader.
+            </summary>
+        </member>
+        <member name="T:PanelTrackerRemake.PanelEnum">
+            <summary>
+            Enumeration to indicate in
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.PanelEnum.None">
+            <summary>
+            Indicates not currently looking at a panel.
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.PanelEnum.Targets">
+            <summary>
+            Indicates looking at the targets (left) panel.
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.PanelEnum.Comms">
+            <summary>
+            Indicates looking at the comms (up) panel.
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.PanelEnum.RolesShip">
+            <summary>
+            Indicates looking at the roles (down) panel while in the ship. (it makes a difference for certian actions).
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.PanelEnum.Systems">
+            <summary>
+            Indicates looking at the systems (right) panel.
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.PanelEnum.RolesSRV">
+            <summary>
+            Indicates looking at the roles (down) panel while in the srv.
+            </summary>
+        </member>
+        <member name="T:PanelTrackerRemake.PluginMain">
+            <summary>
+            Entry point for the plugin.
+            </summary>
+        </member>
+        <member name="M:PanelTrackerRemake.PluginMain.VA_DisplayName">
+            <summary>
+            Returns the display name.
+            </summary>
+            <returns>Display name.</returns>
+        </member>
+        <member name="M:PanelTrackerRemake.PluginMain.VA_DisplayInfo">
+            <summary>
+            Returns the display info.
+            </summary>
+            <returns>display info.</returns>
+        </member>
+        <member name="M:PanelTrackerRemake.PluginMain.VA_Id">
+            <summary>
+            GUID Id for this extension. DO NOT CHANGE (unless you want to make your own version)!!!!
+            </summary>
+            <returns>the guid.</returns>
+        </member>
+        <member name="M:PanelTrackerRemake.PluginMain.VA_StopCommand">
+            <summary>
+            Triggered when VA's stop all commands is called.
+            </summary>
+        </member>
+        <member name="M:PanelTrackerRemake.PluginMain.VA_Init1(System.Object)">
+            <summary>
+            Called when VA launches.
+            </summary>
+            <param name="vaProxy">voice attacks provided type.  unknown type.</param>
+        </member>
+        <member name="M:PanelTrackerRemake.PluginMain.VA_Exit1(System.Object)">
+            <summary>
+            Called when VA exits... duh...
+            </summary>
+            <param name="vaProxy">voice attacks provided type.  unknown type.</param>
+        </member>
+        <member name="M:PanelTrackerRemake.PluginMain.VA_Invoke1(System.Object)">
+            <summary>
+            Auto dected entry point for invocation of this plugin.
+            </summary>
+            <param name="vaProxy">voice attacks provided type.  unknown type.</param>
+        </member>
+        <member name="T:PanelTrackerRemake.TargetPanelEnum">
+            <summary>
+            Indicates the current tab the targets (left) panel is on.
+            </summary>
+        </member>
+    </members>
+</doc>
