@@ -5,10 +5,13 @@ namespace PanelTrackerRemake
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Text.RegularExpressions;
     using System.Threading;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
 
     /// <summary>
     /// Event type for when the journal updates.
@@ -21,17 +24,20 @@ namespace PanelTrackerRemake
     /// </summary>
     public class JournalReader
     {
-        private static dynamic vaProxy;
-
-        private readonly Regex reg;
         private Timer timer;
+        private DirectoryInfo dir;
+        private string[] ignoredEvents;
+        private FileInfo currentFile;
+        private DateTime lastWriteTime;
+        private bool isProcessing = false;
+        private long lastPos;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="JournalReader"/> class.
         /// Uses defualt everything.
         /// </summary>
         public JournalReader()
-            : this(new[] { "Meusic", "Scan", "Progress", "RefuelAll", "SellExplorationData", "Cargo", "NewCommander" })
+            : this("Music", "Scan", "Progress", "RefuelAll", "SellExplorationData", "Cargo", "NewCommander")
         {
         }
 
@@ -52,17 +58,18 @@ namespace PanelTrackerRemake
         /// <param name="dir">Directory of journal files.</param>
         public JournalReader(string[] ignoredEvents, string dir)
         {
+            this.ignoredEvents = ignoredEvents;
+            this.dir = new DirectoryInfo(dir);
+            if (!this.dir.Exists)
+            {
+                throw new ArgumentException("Directory doesn't exist", nameof(dir));
+            }
         }
 
         /// <summary>
         /// Fires when ever a new entry is made in the journal.
         /// </summary>
         public event JournalUpdated OnJournalUpdate;
-
-        /// <summary>
-        /// Sets the vaProxy to use.
-        /// </summary>
-        public static dynamic VaProxy { set => vaProxy = value; }
 
         /// <summary>
         /// Gets a value indicating whether or not the Reader has started.
@@ -93,6 +100,7 @@ namespace PanelTrackerRemake
         /// </summary>
         public void Stop()
         {
+            this.IsStarted = false;
             this.timer.Change(Timeout.Infinite, Timeout.Infinite);
         }
 
@@ -100,7 +108,72 @@ namespace PanelTrackerRemake
         private void loop(object state)
 #pragma warning restore SA1300 // Element must begin with upper-case letter
         {
-            // TODO: STUFF.
+            if (this.isProcessing) return;
+            if (this.currentFile == null)
+            {
+                this.currentFile = this.dir.GetFiles().OrderBy(fi => fi.LastWriteTimeUtc).FirstOrDefault();
+                this.lastWriteTime = this.currentFile.LastWriteTimeUtc;
+            }
+            else
+            {
+                this.currentFile.Refresh();
+                if (this.lastWriteTime < this.currentFile.LastWriteTimeUtc)
+                {
+                    this.Process();
+                }
+
+                if (this.dir.GetFiles().Any(fi => this.currentFile.LastWriteTimeUtc < fi.LastWriteTimeUtc))
+                {
+                    this.currentFile = this.dir.GetFiles().OrderBy(fi => fi.LastWriteTimeUtc).FirstOrDefault();
+                    this.Process();
+                }
+            }
+        }
+
+        private void Process()
+        {
+            this.isProcessing = true;
+            int readLen = 0;
+            long seekpos = 0L;
+            if (this.lastPos > this.currentFile.Length)
+            {
+                readLen = (int)this.currentFile.Length;
+            }
+            else if (this.lastPos < this.currentFile.Length)
+            {
+                seekpos = this.lastPos;
+                readLen = (int)(this.currentFile.Length - this.lastPos);
+            }
+            else
+            {
+                this.isProcessing = false;
+                return;
+            }
+
+            using (FileStream fs = this.currentFile.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            {
+                fs.Seek(seekpos, SeekOrigin.Begin);
+                byte[] bytes = new byte[readLen];
+                int haveRead = 0;
+                while (haveRead < readLen)
+                {
+                    haveRead += fs.Read(bytes, haveRead, readLen - haveRead);
+                    fs.Seek(seekpos + haveRead, SeekOrigin.Begin);
+                }
+
+                string[] lines = Regex.Split(Encoding.UTF8.GetString(bytes), "\r?\n");
+                foreach (string line in lines)
+                {
+                    JObject jObject = JsonConvert.DeserializeObject<JObject>(line);
+                    if (!this.ignoredEvents.Any(jObject.Value<string>("event")))
+                    {
+                        this.OnJournalUpdate?.Invoke(jObject);
+                    }
+                }
+            }
+
+            this.lastPos = this.currentFile.Length;
+            this.isProcessing = false;
         }
     }
 }

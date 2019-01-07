@@ -8,5 +8,24 @@ namespace PanelTrackerRemake
     /// </summary>
     public enum TargetPanelEnum
     {
+        /// <summary>
+        /// Indicates the navigation tab is selected.
+        /// </summary>
+        Navigation,
+
+        /// <summary>
+        /// Indicates the transactions tab is selected.
+        /// </summary>
+        Transactions,
+
+        /// <summary>
+        /// Indicates the contacts tab is selected.
+        /// </summary>
+        Contacts,
+
+        /// <summary>
+        /// This is the weird one.  Indicates the target tab is selected (though it may be disabled depending on context).
+        /// </summary>
+        Target
     }
 }

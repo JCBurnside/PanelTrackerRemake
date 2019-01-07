@@ -4,6 +4,41 @@
         <name>PanelTrackerRemake</name>
     </assembly>
     <members>
+        <member name="T:PanelTrackerRemake.CommsEnum">
+            <summary>
+            Indicate which comms tab is selected.
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.CommsEnum.Chat">
+            <summary>
+            Self explainatory.
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.CommsEnum.DMs">
+            <summary>
+            Refered to as inbox in game.
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.CommsEnum.Social">
+            <summary>
+            Self explainatory.
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.CommsEnum.History">
+            <summary>
+            Self explainatory.
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.CommsEnum.Squadron">
+            <summary>
+            The new squadron tab in game.
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.CommsEnum.Settings">
+            <summary>
+            Self explainatory.
+            </summary>
+        </member>
         <member name="P:PanelTrackerRemake.EDPTConts.Journal">
             <summary>
             Gets the journal SessionState key <see cref="T:System.String"/>.
@@ -37,6 +72,66 @@
         <member name="P:PanelTrackerRemake.EDPTConts.CurrentShipRoleTab">
             <summary>
             Gets the current ship roles tab sessionState key <see cref="T:System.String"/>.
+            </summary>
+        </member>
+        <member name="P:PanelTrackerRemake.EDPTConts.CommsCommand">
+            <summary>
+            Gets the string for the comms command.
+            </summary>
+        </member>
+        <member name="P:PanelTrackerRemake.EDPTConts.ContactsCommand">
+            <summary>
+            Gets the string for the conatcts command.
+            </summary>
+        </member>
+        <member name="P:PanelTrackerRemake.EDPTConts.RolesCommand">
+            <summary>
+            Gets the string for the roles command.
+            </summary>
+        </member>
+        <member name="P:PanelTrackerRemake.EDPTConts.SystemsCommand">
+            <summary>
+            Gets the string for the systems command.
+            </summary>
+        </member>
+        <member name="P:PanelTrackerRemake.EDPTConts.NextTabCommand">
+            <summary>
+            Gets the string for the next tab command.
+            </summary>
+        </member>
+        <member name="P:PanelTrackerRemake.EDPTConts.PrevTabCommand">
+            <summary>
+            Gets the string for the prev tab command.
+            </summary>
+        </member>
+        <member name="P:PanelTrackerRemake.EDPTConts.UpCommand">
+            <summary>
+            Gets the string for the up command.
+            </summary>
+        </member>
+        <member name="P:PanelTrackerRemake.EDPTConts.RightCommand">
+            <summary>
+            Gets the string for the right command.
+            </summary>
+        </member>
+        <member name="P:PanelTrackerRemake.EDPTConts.DownCommand">
+            <summary>
+            Gets the string for the down command.
+            </summary>
+        </member>
+        <member name="P:PanelTrackerRemake.EDPTConts.LeftCommand">
+            <summary>
+            Gets the string for the left command.
+            </summary>
+        </member>
+        <member name="P:PanelTrackerRemake.EDPTConts.AcceptCommand">
+            <summary>
+            Gets the string for the accept command.
+            </summary>
+        </member>
+        <member name="P:PanelTrackerRemake.EDPTConts.BackCommand">
+            <summary>
+            Gets the string for the back command.
             </summary>
         </member>
         <member name="T:PanelTrackerRemake.JournalUpdated">
@@ -73,11 +168,6 @@
         <member name="E:PanelTrackerRemake.JournalReader.OnJournalUpdate">
             <summary>
             Fires when ever a new entry is made in the journal.
-            </summary>
-        </member>
-        <member name="P:PanelTrackerRemake.JournalReader.VaProxy">
-            <summary>
-            Sets the vaProxy to use.
             </summary>
         </member>
         <member name="P:PanelTrackerRemake.JournalReader.IsStarted">
@@ -168,17 +258,132 @@
             <summary>
             Called when VA exits... duh...
             </summary>
-            <param name="vaProxy">voice attacks provided type.  unknown type.</param>
+            <param name="vaProxy">voice attacks provided proxy.  unknown type.</param>
         </member>
         <member name="M:PanelTrackerRemake.PluginMain.VA_Invoke1(System.Object)">
             <summary>
             Auto dected entry point for invocation of this plugin.
             </summary>
-            <param name="vaProxy">voice attacks provided type.  unknown type.</param>
+            <param name="vaProxy">voice attacks provided proxy.  unknown type.</param>
+        </member>
+        <member name="T:PanelTrackerRemake.ShipRoleEnum">
+            <summary>
+            Indicates which of the roles tab is selected (while in the ship).
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.ShipRoleEnum.ALL">
+            <summary>
+            Self explainatory.
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.ShipRoleEnum.Helm">
+            <summary>
+            Self explainatory.
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.ShipRoleEnum.Fighters">
+            <summary>
+            Self explainatory.
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.ShipRoleEnum.Srv">
+            <summary>
+            Self explainatory.
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.ShipRoleEnum.Crew">
+            <summary>
+            Self explainatory.
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.ShipRoleEnum.Help">
+            <summary>
+            Self explainatory.
+            </summary>
+        </member>
+        <member name="T:PanelTrackerRemake.SrvRolesEnum">
+            <summary>
+            indicates which tab the role panel is on while in the srv.
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.SrvRolesEnum.Helm">
+            <summary>
+            Self explainatory.
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.SrvRolesEnum.Srv">
+            <summary>
+            Self explainatory.
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.SrvRolesEnum.Help">
+            <summary>
+            Self explainatory.
+            </summary>
+        </member>
+        <member name="T:PanelTrackerRemake.SystemsEnum">
+            <summary>
+            Indicates which systems tab is currently selected.
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.SystemsEnum.Home">
+            <summary>
+            Self explainatory.
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.SystemsEnum.Modules">
+            <summary>
+            Self explainatory.
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.SystemsEnum.FireGroups">
+            <summary>
+            Self explainatory.
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.SystemsEnum.Ship">
+            <summary>
+            Self explainatory.
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.SystemsEnum.Invetory">
+            <summary>
+            Self explainatory.
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.SystemsEnum.Status">
+            <summary>
+            Self explainatory.
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.SystemsEnum.PlayList">
+            <summary>
+            Self explainatory.
+            </summary>
         </member>
         <member name="T:PanelTrackerRemake.TargetPanelEnum">
             <summary>
             Indicates the current tab the targets (left) panel is on.
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.TargetPanelEnum.Navigation">
+            <summary>
+            Indicates the navigation tab is selected.
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.TargetPanelEnum.Transactions">
+            <summary>
+            Indicates the transactions tab is selected.
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.TargetPanelEnum.Contacts">
+            <summary>
+            Indicates the contacts tab is selected.
+            </summary>
+        </member>
+        <member name="F:PanelTrackerRemake.TargetPanelEnum.Target">
+            <summary>
+            This is the weird one.  Indicates the target tab is selected (though it may be disabled depending on context).
             </summary>
         </member>
     </members>
