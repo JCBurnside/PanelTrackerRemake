@@ -13,7 +13,9 @@ namespace PanelTrackerRemake
     public class PluginMain
     {
         private static dynamic vaProxy;
-
+#if DEBUG
+        public static bool CheckElite = false;
+#endif
         /// <summary>
         /// Returns the display name.
         /// </summary>
@@ -128,10 +130,15 @@ namespace PanelTrackerRemake
         /// <param name="vaProxy">voice attacks provided proxy.  unknown type.</param>
         public static void VA_Invoke1(dynamic vaProxy)
         {
-            if (!Process.GetProcessesByName("EliteDangerous64").Any())
+            if (
+#if DEBUG
+                CheckElite && // used for unit testing purposes.
+#endif
+                !Process.GetProcessesByName("EliteDangerous64").Any()
+            )
             {
                 vaProxy.WriteToLog("Can not proccess.  Elite is not running. Stoping journal.", "Red");
-                if (vaProxy.SesssionState[EDPTConts.Journal] is JournalReader _reader)
+                if (vaProxy.SessionState[EDPTConts.Journal] is JournalReader _reader)
                 {
                     _reader.Stop();
                 }
@@ -139,12 +146,12 @@ namespace PanelTrackerRemake
                 return;
             }
 
-            if (vaProxy.SesssionState[EDPTConts.Journal] is JournalReader reader && !reader.IsStarted)
+            if (vaProxy.SessionState[EDPTConts.Journal] is JournalReader reader && !reader.IsStarted)
             {
                 reader.Start();
             }
 
-            switch (vaProxy.Context.ToLowerInvariant())
+            switch (vaProxy.Context?.ToLowerInvariant())
             {
                 case "comms":
                 case "communications":

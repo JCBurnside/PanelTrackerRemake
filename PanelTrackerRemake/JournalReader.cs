@@ -101,7 +101,7 @@ namespace PanelTrackerRemake
         public void Stop()
         {
             this.IsStarted = false;
-            this.timer.Change(Timeout.Infinite, Timeout.Infinite);
+            this.timer?.Change(Timeout.Infinite, Timeout.Infinite);
         }
 
 #pragma warning disable SA1300 // Element must begin with upper-case letter

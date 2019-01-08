@@ -5,18 +5,18 @@
     using System.Linq;
     using System.Text;
 
-    internal class VaProxyStub
+    public class VaProxyStub
     {
-        private readonly Lazy<Dictionary<string, object>> sessionState;
-        private readonly Lazy<List<string>> commands;
+        private readonly Lazy<Dictionary<string, object>> sessionState = new Lazy<Dictionary<string, object>>();
+        private readonly Lazy<List<string>> commands = new Lazy<List<string>>();
 
         internal VaProxyStub()
         {
         }
 
-        public Dictionary<string, object> SessionState { get => this.sessionState.Value; }
+        public Dictionary<string, object> SessionState => this.sessionState.Value;
 
-        public string Context { get; internal set; }
+        public string Context { get; internal set; } = string.Empty;
 
         public bool Stopped { get; internal set; } = false;
 
@@ -26,7 +26,7 @@
 
         internal List<string> ExecutedCommands { get; private set; } = new List<string>();
 
-        internal List<(string color, string text)> ConsoleOut { get; private set; }
+        internal List<(string color, string text)> ConsoleOut { get; private set; } = new List<(string color, string text)>();
 
         #region Get/Sets Legacy
         public void SetSmallInt(string name, short? value)
